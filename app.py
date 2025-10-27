@@ -13,7 +13,15 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key' # CSRF対策やセッション管理のための秘密鍵
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+# 1. RenderのPostgreSQL管理画面からコピーした「Internal Database URL」を貼り付けます
+# (例: 'postgres://my_user:xxxx@host.com/my_db')
+db_url = 'postgresql://my_fashion_db_user:BFL5ZN7ENAZM6tKx0PqJ2aQCL7QIs8Er@dpg-d3vgncbipnbc739l076g-a/my_fashion_db' 
+
+# 2. (重要) SQLAlchemyが認識できるようにURLを 'postgresql://' に書き換えます
+if db_url.startswith('postgres://'):
+    db_url = db_url.replace('postgres://', 'postgresql://', 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
