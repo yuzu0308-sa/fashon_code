@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="admin-dashboard-section">
+    <h2>管理者ダッシュボード</h2>
+    <p>ようこそ, {{ current_user.username }} さん！</p>
+    
+    
+    <div class="export-section" style="margin-top: 20px; margin-bottom: 30px;">
+        <h3>統計データのエクスポート</h3>
+        <a href="{{ url_for('download_excel') }}" class="btn btn-success">
+            エクセル形式でダウンロード
+        </a>
+    </div>
+    <h3>商品別 売上ランキング</h3>
+    
+    {% if sales_stats %}
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>順位</th>
+                    <th>商品名</th>
+                    <th>販売数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in sales_stats %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ stat.name }}</td>
+                    <td>{{ stat.total_sold }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>まだ販売データがありません。</p>
+    {% endif %}
+
+    <h3 class="ranking-title">いいね！ランキング</h3>
+    {% if likes_stats %}
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>順位</th>
+                    <th>商品名</th>
+                    <th>いいね数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in likes_stats %}
+                    {# いいねが1以上の商品のみ表示 #}
+                    {% if product.likes > 0 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.likes }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>まだ「いいね」された商品がありません。</p>
+    {% endif %}
+    
+</section>
+{% endblock %}

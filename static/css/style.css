@@ -1,0 +1,315 @@
+/* style.css */
+
+/* --- 1. 基本設定と変数 --- */
+:root {
+    --primary-color: #ffb6c1;   /* パステルピンク */
+    --secondary-color: #add8e6; /* パステルブルー */
+    --success-color: #28a745;   /* 緑 */
+    --danger-color: #dc3545;    /* 赤 */
+    --text-color: #4a4a4a;
+    --light-text-color: #6a6a6a;
+    --bg-color: #fcf8f7;
+    --card-bg-color: #ffffff;
+    --border-color: #ffe4e1;
+    --shadow-color: rgba(255, 182, 193, 0.3);
+}
+
+body {
+    font-family: 'Hiragino Sans', sans-serif;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--light-text-color);
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--primary-color);
+}
+
+/* --- 2. 共通コンポーネント --- */
+
+/* ▼ ボタン（大幅に共通化） */
+.btn {
+    display: inline-block;
+    border: 1px solid transparent;
+    padding: 0.7rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+.btn-primary:hover {
+    background-color: #ff69b4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #87ceeb;
+}
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+.btn-like { /* いいねボタン専用 */
+    background-color: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+.btn-like:hover {
+    background-color: #fff0f5;
+    transform: scale(1.05);
+}
+
+/* ▼ コンテンツボックス（ログイン画面などで使用） */
+.content-box {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--card-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* ▼ テーブル（カートと管理者画面で共通化） */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: var(--card-bg-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden; /* 角丸を有効にするため */
+}
+.data-table th, .data-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+.data-table th {
+    background-color: var(--bg-color);
+}
+
+
+/* --- 3. レイアウト --- */
+.main-header, .main-footer {
+    background-color: var(--card-bg-color);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+.main-footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    margin-top: 3rem;
+    box-shadow: 0 -2px 5px var(--shadow-color);
+}
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.main-content {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* --- 4. 各パーツのスタイル --- */
+
+/* ヘッダー */
+.site-title {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
+.site-title a { color: inherit; }
+.site-title a:hover { color: #ff69b4; }
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+}
+.main-nav a {
+    font-weight: bold;
+    padding: 0.5rem 0;
+    position: relative;
+}
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+/* 検索フォーム */
+.search-form {
+    display: flex;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+}
+.search-form input {
+    border: none;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    outline: none;
+}
+.search-form button { /* 固有スタイルのみ */
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.search-form button:hover {
+    background-color: #87ceeb;
+}
+
+/* 商品グリッド */
+.products-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 2.2em;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+.product-card {
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+.product-card img {
+    max-width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+.product-info {
+    padding: 1.5rem;
+}
+.product-card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.3em;
+}
+.product-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0.8rem 0;
+}
+
+/* ▼ ボタンのズレを修正したアクションエリア */
+.action-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+}
+.like-section {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+.like-count {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* カートページ */
+.cart-summary {
+    text-align: right;
+    margin-top: 1rem;
+}
+.total-price {
+    font-size: 1.8em;
+    color: var(--primary-color);
+}
+.checkout-button { /* 固有スタイルのみ */
+    padding: 1rem 2rem;
+    font-size: 1.2em;
+    margin-top: 1rem;
+}
+
+/* ログインページ */
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+.login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.login-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.login-button { /* 固有スタイル */
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1em;
+}
+
+/* --- 5. レスポンシブ --- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+@media (max-width: 480px) {
+    .main-nav ul {
+        justify-content: center;
+    }
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}

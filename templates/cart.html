@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="cart-section">
+    <h2>ショッピングカート</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if cart_items %}
+        <div class="cart-container">
+            <table class="data-table"> 
+                <thead>
+                    <tr>
+                        <th colspan="2">商品</th>
+                        <th>価格</th>
+                        <th>数量</th>
+                        <th>小計</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename='images/' + item.product.image_filename) }}" alt="{{ item.product.name }}" class="cart-item-image">
+                        </td>
+                        <td>{{ item.product.name }}</td>
+                        <td>¥{{ "{:,}".format(item.product.price) }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>¥{{ "{:,}".format(item.item_total) }}</td>
+                        <td>
+                            <a href="{{ url_for('remove_from_cart', product_id=item.product.id) }}" class="btn btn-danger">削除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="cart-summary">
+                <h3>合計金額: <span class="total-price">¥{{ "{:,}".format(total_price) }}</span></h3>
+                <form action="{{ url_for('checkout') }}" method="post">
+                    <button type="submit" class="btn btn-success checkout-button">購入手続きへ</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p class="cart-empty-message">カートに商品がありません。</p>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">お買い物を続ける</a>
+    {% endif %}
+</section>
+{% endblock %}

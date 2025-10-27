@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ふんわりオーダー服</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="site-title"><a href="/">💖 ふんわりオーダー服 💖</a></h1>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/">すべて</a></li>
+                    <li><a href="/mens">メンズ</a></li>
+                    <li><a href="/ladies">レディース</a></li>
+                    <li><a href="{{ url_for('view_cart') }}">🛒 カート</a></li> </ul>
+                </ul>
+            </nav>
+
+            <form action="/" method="get" class="search-form">
+                <input type="text" name="q" placeholder="気になる服を探す..." value="{{ search_query or '' }}">
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 ふんわりブランド. All rights reserved. ✨</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

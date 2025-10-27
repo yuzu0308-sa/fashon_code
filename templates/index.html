@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="products-section">
+    {% if search_query %}
+        <h2>「{{ search_query }}」の検索結果</h2>
+        <p class="search-results-count">{{ products|length }} 件見つかりました</p>
+    {% else %}
+        <h2>{% if category %}{{ category|capitalize }}アイテム{% else %}おすすめアイテム{% endif %}</h2>
+    {% endif %}
+    
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ url_for('static', filename='images/' + product.image_filename) }}" alt="{{ product.name }}">
+                    <div class="product-info">
+                        <h3>{{ product.name }}</h3>
+                        <p class="product-price">¥{{ "{:,}".format(product.price) }}</p>
+                        <div class="action-section">
+                            <div class="like-section">
+                                <button class="btn btn-like like-button" data-product-id="{{ product.id }}">いいね！</button>
+                                <span class="like-count" id="like-count-{{ product.id }}">{{ product.likes }}</span>
+                            </div>
+                            <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+                                <button type="submit" class="btn btn-primary">カートに入れる</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-results">該当する商品が見つかりませんでした。別のキーワードでお試しください。</p>
+    {% endif %}
+</section>
+{% endblock %}
