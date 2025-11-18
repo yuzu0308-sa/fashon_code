@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key' # CSRF対策やセッション管理のための秘密鍵
 # 1. RenderのPostgreSQL管理画面からコピーした「Internal Database URL」を貼り付けます
 # (例: 'postgres://my_user:xxxx@host.com/my_db')
-db_url = 'postgresql://postgres:Sakura03080114@db.pbumgepjxcctjrxgvuad.supabase.co:5432/postgres' 
+db_url = 'postgresql://postgres:Sakura03080114@@db.pbumgepjxcctjrxgvuad.supabase.co:5432/postgres' 
 
 # 2. (重要) SQLAlchemyが認識できるようにURLを 'postgresql://' に書き換えます
 if db_url.startswith('postgres://'):
