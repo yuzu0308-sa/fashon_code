@@ -9,18 +9,25 @@ import io
 from flask import send_file
 
 # --- アプリケーションの初期設定 ---
+# basedir は不要です
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key' # CSRF対策やセッション管理のための秘密鍵
-# 1. RenderのPostgreSQL管理画面からコピーした「Internal Database URL」を貼り付けます
-# (例: 'postgres://my_user:xxxx@host.com/my_db')
-db_url = 'postgresql://postgres:Sakura03080114[]@db.pbumgepjxcctjrxgvuad.supabase.co:5432/postgres'
 
-# 2. (重要) SQLAlchemyが認識できるようにURLを 'postgresql://' に書き換えます
+# --- ▼ここを修正▼ ---
+
+# 1. Renderで新しく作ったデータベースの「Internal Database URL」を貼り付けます
+db_url = 'postgresql://my_fashion_db2_user:MQIRMpO72s22yATxSOzRNZWexoZMN2xW@dpg-d4e0kmadbo4c73d65rp0-a/my_fashion_db2' 
+# (例: 'postgres://my_user:xxxx@host.com/my_db')
+
+# 2. (重要) 'postgres://' を 'postgresql://' に書き換えます
 if db_url.startswith('postgres://'):
     db_url = db_url.replace('postgres://', 'postgresql://', 1)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+
+# --- ▲ここまで▲ ---
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
